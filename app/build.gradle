@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application' //表示是一个应用程序的模块，可独立运行
+//apply plugin: 'com.android.library' //表示是一个依赖库，不能独立运行
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.example.music.g_brain"
+        minSdkVersion 19
+
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'cn.bmob.android:bmob-sdk:3.6.0'
+}
