@@ -19,6 +19,13 @@ import android.view.WindowManager;
 import com.example.music.g_brain.R;
 import com.example.music.g_brain.beans.Person;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Socket;
+
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -104,7 +111,43 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    try {
+                        Socket socket = new Socket("192.168.31.186",45414);
+                        OutputStream outputStream = socket.getOutputStream();
+                        outputStream.write("我是客户端".getBytes());
+                        outputStream.flush();
+                        outputStream.close();
+                        socket.shutdownOutput();
+                        InputStream inputStream = socket.getInputStream();
+                        System.out.println("获取服务端输入流");
+                        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                        String inputLine = null;
+                        StringBuffer buffer = new StringBuffer();
+                        while ((inputLine = bufferedReader.readLine()) != null){
+                            buffer.append(inputLine);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                System.out.println("获取服务端输入流");
+                            }
+                        });
+                        System.out.println(buffer.toString());
+                        bufferedReader.close();
+                        inputStreamReader.close();
+                        inputStream.close();
+                        socket.close();
 
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
         } else if (id == R.id.nav_about) {
 //            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
 //            startActivity(intent);
