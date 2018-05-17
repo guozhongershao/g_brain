@@ -24,7 +24,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.exception.BmobException;
@@ -109,6 +115,32 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
+            byte[] bytes = new byte[1024];
+            try {
+                bytes = "我是客户端".getBytes("utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            try {
+                // 发送udp数据包
+                InetAddress address = InetAddress.getByName("192.168.31.186");
+                DatagramPacket datagramPacket = new DatagramPacket(bytes, bytes.length, address,23456);
+                DatagramSocket datagramSocket = new DatagramSocket();
+                datagramSocket.send(datagramPacket);
+
+                // 接受数据
+                byte[] bytes1 = new byte[1024];
+                DatagramPacket receivePacket = new DatagramPacket(bytes1, bytes1.length);
+                datagramSocket.receive(receivePacket);
+                System.out.println("服务器：" + new String(bytes1,"utf-8"));
+                datagramSocket.close();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            } catch (SocketException e){
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         } else if (id == R.id.nav_share) {
             new Thread() {
@@ -116,7 +148,7 @@ public class MainActivity extends AppCompatActivity
                 public void run() {
                     super.run();
                     try {
-                        Socket socket = new Socket("192.168.31.186",45414);
+                        Socket socket = new Socket("192.168.31.186",11233);
                         OutputStream outputStream = socket.getOutputStream();
                         outputStream.write("我是客户端".getBytes());
                         outputStream.flush();
