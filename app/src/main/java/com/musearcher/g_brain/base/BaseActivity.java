@@ -1,4 +1,4 @@
-package com.example.music.g_brain.base;
+package com.musearcher.g_brain.base;
 
 import android.support.v7.app.AppCompatActivity;
 

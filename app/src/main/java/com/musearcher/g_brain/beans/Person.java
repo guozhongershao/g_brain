@@ -1,4 +1,4 @@
-package com.example.music.g_brain.beans;
+package com.musearcher.g_brain.beans;
 
 import cn.bmob.v3.BmobObject;
 

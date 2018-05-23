@@ -1,4 +1,4 @@
-package com.example.music.g_brain.activities;
+package com.musearcher.g_brain.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.example.music.g_brain.R;
+import com.musearcher.g_brain.R;
 
 public class ScrollingActivity extends AppCompatActivity {
 

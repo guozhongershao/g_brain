@@ -1,4 +1,4 @@
-package com.example.music.g_brain;
+package com.musearcher.g_brain;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
